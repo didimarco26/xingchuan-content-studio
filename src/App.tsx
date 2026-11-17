@@ -1824,7 +1824,7 @@ export default function App() {
   ] : [];
   const creativeChildren: NavNode[] = result ? [
     ...(hasMatchedCases ? [{ id: 'sec-cases-anchor', label: '该商品相关的星川爆款素材参考' }] : []),
-    ...(isGhPages() ? [{ id: 'sec-strategy-anchor', label: '素材策略一页纸', highlight: true }] : []),
+    ...((isGhPages() || CONTENT_ONLY) ? [{ id: 'sec-strategy-anchor', label: '素材策略一页纸', highlight: true }] : []),
     ...(briefs.length ? [{ id: 'sec-brief-anchor', label: '拍摄 Brief 拆解' }] : []),
     ...result.creativeDirections.map((d, i) => ({
       id: `sec-dir-anchor-${i}`,
@@ -2265,7 +2265,7 @@ export default function App() {
                 </div>
                 )
               }
-              strategySlot={isGhPages() ? (
+              strategySlot={(isGhPages() || CONTENT_ONLY) ? (
                 <MaterialStrategyCard
                   key={`strategy-${form.url || form.productName}`}
                   autoGenerate
