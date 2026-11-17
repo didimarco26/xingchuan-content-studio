@@ -218,7 +218,7 @@ export interface GhTrackExtra {
   adjustNote?: string;
 
   // —— Brief 拆解层（gen_brief）——
-  /** gen_brief 产出的 3-5 条 Brief 方向全量（JSON/格式化文本） */
+  /** gen_brief 产出的 4-5 条 Brief 方向全量（至少 4 条；JSON/格式化文本） */
   briefs?: string;
   /** 用户实际勾选的 Brief 方向名称（/ 分隔） */
   selectedBriefs?: string;

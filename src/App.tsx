@@ -867,7 +867,7 @@ export default function App() {
       return L.join('\n');
     }).join('\n\n');
   }, []);
-  // gen_brief 产出的 3-5 条拍摄 Brief 方向全量留痕（含用户编辑后的版本），落「Brief方向全量」字段
+  // gen_brief 产出的 4-5 条拍摄 Brief 方向（至少 4 条）全量留痕（含用户编辑后的版本），落「Brief方向全量」字段
   const ghBriefsFullText = useCallback((list: BriefDirection[]) => {
     return (list || []).map((b, i) => {
       const L: string[] = [];
@@ -1399,12 +1399,12 @@ export default function App() {
   const phase1StepsFor = (m: string) => m === 'script'
     ? [
         { key: 'wrap', label: '爆款案例匹配 · 跑量公式 · 合规' },
-        { key: 'gen_brief', label: 'Brief 方向拆解（3-5 条）' },
+        { key: 'gen_brief', label: 'Brief 方向拆解（4-5 条，至少 4 条）' },
       ]
     : [
         { key: 'score', label: '商品分析（五维适配 + AI 红线）' },
         { key: 'wrap', label: '爆款案例匹配 · 跑量公式 · 合规' },
-        { key: 'gen_brief', label: 'Brief 方向拆解（3-5 条）' },
+        { key: 'gen_brief', label: 'Brief 方向拆解（4-5 条，至少 4 条）' },
       ];
 
   // ---- 第一阶段：商品洞察 → 星川爆款素材参考 → Brief 拆解 ----
@@ -1809,7 +1809,7 @@ export default function App() {
   const sectionDesc =
     isFull ? '链接识别 → 商品信息（含二级类目底表）→ 服务商参数 → 100 分制适配分析 + AI 红线/策略'
     : isScore ? '链接识别 → 二级类目底表 → 服务商参数 → 实时 100 分制适配分析 + AI 红线/策略'
-    : isScript ? '粘贴商品链接自动识别商品名/品牌/行业/客单价/卖点，先拆解 3-5 个拍摄 Brief，确认后生成四段式脚本'
+    : isScript ? '粘贴商品链接自动识别商品名/品牌/行业/客单价/卖点，先拆解 4-5 个拍摄 Brief（至少 4 个），确认后生成四段式脚本'
     : '粘贴商品链接自动识别商品信息，结合内容偏好标签，直接匹配存量星川/优质星川达人';
 
   // 左侧导览锚点（三段统一命名：商品分析 / 内容创意 / 达人匹配；子项按当前模式/状态动态展开）
@@ -2080,7 +2080,7 @@ export default function App() {
               {loading
                 ? (isScript ? '商品洞察与 Brief 方向拆解中…' : '商品分析 · 洞察 · 爆款参考 · Brief 拆解中…')
                 : isMatch ? '开始匹配达人（存量星川 + 优质星川 AI 智能匹配）→'
-                : isScript ? '生成商品洞察与拍摄 Brief（3-5 个方向）→'
+                : isScript ? '生成商品洞察与拍摄 Brief（4-5 个方向，至少 4 个）→'
                 : '① 商品分析完成，开始生成 ② 商品洞察 · 爆款素材参考 · Brief 拆解 →'}
             </button>
             {missing.length > 0 && !loading && (

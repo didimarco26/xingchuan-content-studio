@@ -2015,7 +2015,7 @@ function buildScoringBlock(ctx: ScoringContext): string {
 
 // ============================================================
 // 内容创意链路（两段式）：
-//   第一阶段 analyzeBriefPhase   ：商品洞察 → wrap（爆款案例+跑量公式+合规）→ gen_brief（3-5 条 Brief 方向）
+//   第一阶段 analyzeBriefPhase   ：商品洞察 → wrap（爆款案例+跑量公式+合规）→ gen_brief（4-5 条 Brief 方向，至少 4 条）
 //   中间用户操作                 ：查看/编辑/勾选 Brief 方向
 //   第二阶段 generateScriptsPhase：按选定 Brief 调 dir1..dirN 生成痛/买/放/转四段脚本（方向携带 direction.brief）
 // ============================================================
@@ -2041,7 +2041,7 @@ function normalizeBriefsData(data: any): BriefDirection[] {
   return out.slice(0, 5);
 }
 
-/** 网络异常导致 gen_brief 未返回时的前端兜底 3 条 Brief（字段可继续编辑） */
+/** 网络异常导致 gen_brief 未返回时的前端兜底 5 条 Brief（至少 4 条，字段可继续编辑）；与 FaaS buildFallbackBriefs 同名同序 */
 function fallbackBriefs(input: ProductInput): BriefDirection[] {
   const pName = input.productName.trim().slice(0, 20) || '本品';
   const firstSP = input.sellingPoints.split(/[、,，；;\/\n]+/).map(s => s.trim()).filter(Boolean)[0] || `${pName}核心体验点`;
@@ -2056,6 +2056,10 @@ function fallbackBriefs(input: ProductInput): BriefDirection[] {
       '开箱/测评形式，过程实拍+要点呈现，结尾给使用建议', '验证完播率与评论区种草意向'),
     mk(3, '效果证明', `聚焦「${firstSP.slice(0, 16)}」真实效果，建立信任再转化`,
       '素人/达人使用记录+真实反馈，场景化演示卖点', '验证转化率与千川追投ROI'),
+    mk(4, '剧情代入', `用生活化剧情把${pName}植入高频场景，自然带出「${firstSP.slice(0, 16)}」`,
+      '短剧/日常vlog形式，人物冲突+产品自然出场，弱化推销感', '验证完播率与主页/商品点击意向'),
+    mk(5, '福利活动', `以限时福利/价格机制为钩子，推动${pName}即时下单`,
+      '口播+福利字幕+价格锚点对比，强CTA承接', '验证点击率与即时转化率'),
   ];
 }
 
@@ -2145,7 +2149,7 @@ export async function analyzeBriefPhase(
   const wrapData = await callFaasStage('wrap', breakdownInsights ? { ...payload, breakdownInsights } : payload);
   onProgress?.('wrap', wrapData);
 
-  // 4) gen_brief：商品信息 + 类目 + 爆款素材参考摘要 + 跑量公式 → 3-5 条 Brief 方向；失败兜底不阻塞
+  // 4) gen_brief：商品信息 + 类目 + 爆款素材参考摘要 + 跑量公式 → 4-5 条 Brief 方向（至少 4 条）；失败兜底不阻塞
   let briefs: BriefDirection[] = [];
   try {
     const briefData = await callFaasStage('gen_brief', dirPayload);
