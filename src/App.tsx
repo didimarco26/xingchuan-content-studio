@@ -1864,15 +1864,16 @@ export default function App() {
             <h1 className="text-[15px] font-bold text-ink-900 whitespace-nowrap">{ghAppTitle()}</h1>
             <p className="text-[11px] text-ink-400 whitespace-nowrap truncate">{ghAppSubtitle()}</p>
           </div>
-          {/* 历史记录 + 名字登录：对内对外通用，历史按名字归档 */}
+          {/* 历史记录：独立站免登录，直接打开本机历史（默认身份「本机用户」） */}
           <button
             type="button"
-            onClick={() => (wbUserName ? setHistoryOpen(true) : setLoginOpen(true))}
+            onClick={() => setHistoryOpen(true)}
             className="shrink-0 inline-flex items-center gap-1.5 h-9 px-3.5 rounded-[10px] bg-brand-50 border border-brand-100 text-[13px] font-semibold text-brand-700 hover:border-brand-300 transition-colors"
           >
             <History className="w-3.5 h-3.5" /> 历史记录
           </button>
-          {wbUserName ? (
+          {!CONTENT_ONLY && (
+          wbUserName ? (
             <button
               type="button"
               title="切换或退出使用者名称"
@@ -1890,6 +1891,7 @@ export default function App() {
             >
               <User className="w-3.5 h-3.5" /> 登录
             </button>
+          )
           )}
           {!CONTENT_ONLY && (
           <button
@@ -1945,12 +1947,14 @@ export default function App() {
           {/* 顶栏操作：对外版/全链路/打分支持引用爆品库（demo 与正式版一致） */}
           {(isGhPages() || isFull || isScore) && (
             <div className="flex flex-wrap items-center gap-2.5">
+              {!CONTENT_ONLY && (
               <button
                 type="button" onClick={() => setBaopinOpen(true)}
                 className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white border border-brand-200 text-[12.5px] font-semibold text-brand-700 hover:bg-brand-50 hover:border-brand-300 transition-colors shadow-sm"
               >
                 <Package className="w-3.5 h-3.5" /> 引用爆品库商品
               </button>
+              )}
               {isGhPages() && isScript && (
                 <button
                   type="button" onClick={() => setContentHistoryOpen(true)}
@@ -1959,7 +1963,9 @@ export default function App() {
                   <History className="w-3.5 h-3.5" /> 历史记录
                 </button>
               )}
+              {!CONTENT_ONLY && (
               <span className="text-[11px] text-gray-400 hidden sm:inline">从本服务商爆品库带入商品，免重复填写</span>
+              )}
             </div>
           )}
           {/* 达人匹配 → KOC 单达人深度论证入口（仅独立 match 模式展示，协调达人板块结构） */}
