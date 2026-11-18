@@ -403,9 +403,9 @@ export function formatGhTime(ms: number): string {
   return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
 }
 
-// ---- 品牌名称：GitHub 公开版面向服务商，内站面向渠道，两处部署各显示各的名称 ----
-export const GH_APP_TITLE = '星川决策工作台-服务商';
-export const GH_APP_SUBTITLE = '服务商决策工具 · 商品分析 / 内容创意（痛点分析·卖点分析·放大功效·加速转化） / 达人匹配 / 经营看板';
+// ---- 品牌名称：GitHub 公开版为独立内容创意站，内站面向渠道 ----
+export const GH_APP_TITLE = '星川内容分析与脚本生成工作台-服务商';
+export const GH_APP_SUBTITLE = '服务商内容创意工具 · 爆款底池洞察 / 素材策略一页纸 / 痛买放转脚本生成（4–5 个方向，至少 4 个）';
 const INTERNAL_APP_TITLE = '星川内容分析与脚本生成工作台';
 const INTERNAL_APP_SUBTITLE = '爆款底池洞察 · 热点营销拆解 · 千川爆款逐镜拆解 · 痛买放转脚本生成';
 
@@ -426,7 +426,7 @@ export function applyGhBranding() {
   } catch { /* noop */ }
   try {
     const md = document.querySelector('meta[name="description"]');
-    if (md) md.setAttribute('content', '星川决策工作台-服务商：商品分析、四段式内容脚本（痛点分析·卖点分析·放大功效·加速转化）生成与达人匹配框架。');
+    if (md) md.setAttribute('content', '星川内容分析与脚本生成工作台（服务商版）：爆款底池洞察、素材策略一页纸与痛买放转四段式带货脚本生成。');
   } catch { /* noop */ }
 }
 
